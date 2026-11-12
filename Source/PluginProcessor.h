@@ -14,7 +14,7 @@ public:
     bool acceptsMidi() const override { return false; }
     bool producesMidi() const override { return false; }
     bool isMidiEffect() const override { return false; }
-    double getTailLengthSeconds() const override { return 3.0; }
+    double getTailLengthSeconds() const override { return 1.5; }
     bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
 
     int getNumPrograms() override { return 1; }
@@ -32,27 +32,28 @@ public:
     void getStateInformation(juce::MemoryBlock& destination) override;
     void setStateInformation(const void* data, int sizeInBytes) override;
 
-    juce::AudioProcessorValueTreeState parameters;
     void applyPreset(int presetIndex);
 
     static constexpr int presetCount = 4;
     static const std::array<const char*, presetCount> presetNames;
 
+    juce::AudioProcessorValueTreeState parameters;
+
 private:
-    struct DelayChannel
+    struct DelayLine
     {
-        std::vector<float> samples;
+        std::vector<float> buffer;
         int writePosition = 0;
     };
 
-    std::array<DelayChannel, 2> delay;
-    double currentSampleRate = 44100.0;
+    std::array<DelayLine, 2> delayLines;
+    double sampleRate = 44100.0;
     double gatePhase = 0.0;
     float gateEnvelope = 1.0f;
 
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
-    float getParameter(const char* parameterID) const;
-    void setParameter(const char* parameterID, float value);
+    void setValue(const char* id, float value);
+    float getValue(const char* id) const;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PsyGaterAudioProcessor)
 };

@@ -12,15 +12,14 @@ public:
     void resized() override;
 
 private:
-    using SliderAttachment = juce::AudioProcessorValueTreeState::SliderAttachment;
-
     PsyGaterAudioProcessor& processor;
     juce::ComboBox presetBox;
     juce::Label presetLabel;
     std::array<juce::Slider, 9> sliders;
     std::array<juce::Label, 9> labels;
-    std::array<std::unique_ptr<SliderAttachment>, 9> attachments;
+    std::array<std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment>, 9> attachments;
 
-    void configureSlider(size_t index, const juce::String& label, const juce::String& parameterID, bool milliseconds = false);
+    void configureSlider(size_t index, const juce::String& labelText, const juce::String& parameterID, bool milliseconds = false);
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PsyGaterAudioProcessorEditor)
 };

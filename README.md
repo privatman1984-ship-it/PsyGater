@@ -1,54 +1,62 @@
 # PsyGater
 
-PsyGater is a Windows VST3 audio effect for Goa and Psytrance production. It combines a tempo-aware rhythmic gate with a stereo ping-pong delay and four factory starting-point presets.
+PsyGater is a Windows VST3 effect designed around a Goa/Psytrance-inspired rhythmic gate and a stereo delay. It is implemented as a JUCE 8 plugin and structured as a solid starting point for a more advanced production-grade effect.
 
 ## Features
 
-- VST3 effect built with JUCE 8 and CMake.
-- Rhythmic gate with host-tempo divisions (1/4, 1/8, 1/16, 1/32) and free rates.
-- Gate depth, pulse width, attack and release controls.
-- Stereo ping-pong delay with time, feedback and wet-level controls.
-- Factory presets: Goa Pulse, Psy Chop, Echo Ritual and Forest Flow.
-- Plugin state is saved and recalled by the host.
+- Stereo VST3 effect for Windows
+- Rhythmic gate with tempo-aware pattern modulation
+- Stereo delayed feedback texture for psychedelic echoes
+- Factory presets: Goa Pulse, Psy Chop, Echo Ritual and Forest Flow
+- Host-saving parameter state through JUCE's `AudioProcessorValueTreeState`
 
-> This is a starter implementation. Host tempo sync uses the host's reported BPM; the gate phase is free-running rather than locked to host transport position. Factory presets are parameter snapshots, not external `.vstpreset` files.
-
-## Build on Windows
+## Build instructions
 
 ### Requirements
 
 - Windows 10 or later
-- Visual Studio 2022 with **Desktop development with C++** and a Windows 10/11 SDK
-- CMake 3.22 or newer
-- Git and an internet connection for the first configure (JUCE is fetched by CMake)
+- Visual Studio 2022 with Desktop development with C++
+- CMake 3.22+
+- Git
 
-From a **Developer PowerShell for VS 2022** in the repository directory:
+### Configure and build
+
+Open a Developer PowerShell for VS 2022 and run:
 
 ```powershell
 cmake -S . -B build -A x64
+cmake --build build --config Release
+```
+
+If you want only the VST3 target:
+
+```powershell
 cmake --build build --config Release --target PsyGater_VST3
 ```
 
-The VST3 bundle is generated under `build\PsyGater_artefacts\Release\VST3\PsyGater.vst3`. With `COPY_PLUGIN_AFTER_BUILD`, JUCE also attempts to copy it to the standard VST3 folder. If not, copy the bundle to:
+The generated VST3 bundle is typically placed under:
+
+```text
+build\PsyGater_artefacts\Release\VST3\
+```
+
+You can then copy the generated `.vst3` bundle to:
 
 ```text
 C:\Program Files\Common Files\VST3\
 ```
 
-Restart or rescan plugins in your DAW. If you use another Visual Studio generator, adjust the configuration and architecture options accordingly.
+## Preset design
 
-## Controls
+The factory presets are intentionally tuned toward rhythmic psytrance textures:
 
-- **Preset**: select one of four factory settings.
-- **Depth**: amount of attenuation during the closed part of the gate pattern.
-- **Rate**: host-synced rhythmic division or free-running frequency.
-- **Width**: proportion of each cycle for which the gate is open.
-- **Attack / Release**: smooth gate transitions in milliseconds.
-- **Delay**: stereo delay time in milliseconds.
-- **Feedback**: repeats fed back into the delay, internally limited below self-oscillation.
-- **Delay Mix**: balance between gated signal and delayed signal.
-- **Output**: overall dry-to-processed mix.
+- Goa Pulse: wide gate + punchy short delay
+- Psy Chop: fast, tight rhythmic gating
+- Echo Ritual: deep delayed ambience with slower release
+- Forest Flow: slower cycling, more spacious and atmospheric response
 
 ## Notes
 
-The project fetches JUCE 8.0.8 from its upstream Git repository during CMake configuration. JUCE is licensed separately; review its terms before distributing binaries. The plugin uses JUCE's VST3 wrapper and does not include Steinberg SDK source.
+- This repository uses JUCE 8 via CMake `FetchContent`.
+- The plugin is intended as a strong starting point for further refinement in sound design, GUI polish and extra modulation features.
+- The build is Windows-focused, but the code is still based on JUCE and can be adapted for other platforms with minimal changes.
