@@ -15,15 +15,15 @@ struct Preset
     float releaseMs;
     float delayMs;
     float feedback;
-    float delayMix;
-    float outputMix;
+    float dryWet;
+    float output;
 };
 
 constexpr std::array<Preset, PsyGaterAudioProcessor::presetCount> presetValues {{
     { 0.82f, 1.0f, 0.52f, 2.0f, 35.0f, 360.0f, 0.42f, 0.28f, 1.0f },
-    { 0.94f, 2.0f, 0.38f, 0.8f, 18.0f, 260.0f, 0.34f, 0.2f, 0.96f },
-    { 0.65f, 3.0f, 0.60f, 8.0f, 80.0f, 520.0f, 0.68f, 0.52f, 0.9f },
-    { 0.72f, 2.0f, 0.66f, 10.0f, 110.0f, 620.0f, 0.58f, 0.4f, 0.94f }
+    { 0.94f, 2.0f, 0.38f, 0.8f, 18.0f, 260.0f, 0.34f, 0.20f, 0.96f },
+    { 0.65f, 3.0f, 0.60f, 8.0f, 80.0f, 520.0f, 0.68f, 0.52f, 0.90f },
+    { 0.72f, 2.0f, 0.66f, 10.0f, 110.0f, 620.0f, 0.58f, 0.40f, 0.94f }
 }};
 }
 
@@ -60,9 +60,9 @@ juce::AudioProcessorValueTreeState::ParameterLayout PsyGaterAudioProcessor::crea
         juce::NormalisableRange<float>(20.0f, 1500.0f), 360.0f));
     layout.add(std::make_unique<Float>("feedback", "Feedback",
         juce::NormalisableRange<float>(0.0f, maxFeedback), 0.42f));
-    layout.add(std::make_unique<Float>("delayMix", "Delay Mix",
+    layout.add(std::make_unique<Float>("dryWet", "Dry/Wet",
         juce::NormalisableRange<float>(0.0f, 1.0f), 0.28f));
-    layout.add(std::make_unique<Float>("outputMix", "Output",
+    layout.add(std::make_unique<Float>("output", "Output",
         juce::NormalisableRange<float>(0.0f, 1.0f), 1.0f));
     layout.add(std::make_unique<Choice>("preset", "Preset",
         juce::StringArray { "Goa Pulse", "Psy Chop", "Echo Ritual", "Forest Flow" }, 0));
@@ -111,8 +111,8 @@ float PsyGaterAudioProcessor::getValue(const char* id) const
 
 void PsyGaterAudioProcessor::setValue(const char* id, float value)
 {
-    if (auto* param = parameters.getRawParameterValue(id))
-        param->setValueNotifyingHost(value);
+    if (auto* parameter = parameters.getRawParameterValue(id))
+        parameter->setValueNotifyingHost(value);
 }
 
 void PsyGaterAudioProcessor::applyPreset(int presetIndex)
@@ -127,10 +127,10 @@ void PsyGaterAudioProcessor::applyPreset(int presetIndex)
     setValue("release", preset.releaseMs);
     setValue("delayTime", preset.delayMs);
     setValue("feedback", preset.feedback);
-    setValue("delayMix", preset.delayMix);
-    setValue("outputMix", preset.outputMix);
-    if (auto* presetParam = parameters.getRawParameterValue("preset"))
-        presetParam->setValueNotifyingHost(static_cast<float>(index));
+    setValue("dryWet", preset.dryWet);
+    setValue("output", preset.output);
+    if (auto* presetParameter = parameters.getRawParameterValue("preset"))
+        presetParameter->setValueNotifyingHost(static_cast<float>(index));
 }
 
 void PsyGaterAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
@@ -154,16 +154,10 @@ void PsyGaterAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce
     const float releaseMs = getValue("release");
     const float delayMs = getValue("delayTime");
     const float feedback = juce::jlimit(0.0f, maxFeedback, getValue("feedback"));
-    const float delayMix = getValue("delayMix");
-    const float outputMix = getValue("outputMix");
+    const float dryWet = getValue("dryWet");
+    const float output = getValue("output");
 
-    double bpm = 120.0;
-    if (auto* playHead = getPlayHead())
-        if (auto position = playHead->getPosition())
-            if (auto hostBpm = position->getBpm())
-                bpm = juce::jlimit(20.0, 300.0, *hostBpm);
-
-    const double divisionRates[] = { bpm / 60.0, bpm / 30.0, bpm / 15.0, bpm / 7.5, 4.0, 8.0, 12.0 };
+    const double divisionRates[] = { 2.0, 4.0, 8.0, 16.0, 4.0, 8.0, 12.0 };
     const int rateIndex = juce::jlimit(0, 6, juce::roundToInt(rateValue));
     const double gateRate = divisionRates[rateIndex];
     const double phaseStep = gateRate / sampleRate;
@@ -189,20 +183,18 @@ void PsyGaterAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce
             const int size = static_cast<int>(line.buffer.size());
             const int readPos = (line.writePosition + size - delaySamples) % size;
             const float delayed = line.buffer[static_cast<size_t>(readPos)];
-            const float cross = (ch == 0 && activeChannels > 1)
-                ? delayLines[1].buffer[static_cast<size_t>(readPos)]
-                : ((ch == 1 && activeChannels > 1)
-                    ? delayLines[0].buffer[static_cast<size_t>(readPos)]
-                    : delayed);
-
             const float source = (ch == 0) ? inputL : inputR;
-            const float gatedInput = source * gateEnvelope;
+            const float cross = (activeChannels > 1)
+                ? delayLines[static_cast<size_t>(1 - ch)].buffer[static_cast<size_t>(readPos)]
+                : delayed;
 
-            line.buffer[static_cast<size_t>(line.writePosition)] = gatedInput + cross * feedback;
+            const float gatedSource = source * gateEnvelope;
+            line.buffer[static_cast<size_t>(line.writePosition)] = gatedSource + cross * feedback;
 
-            const float wet = delayed * (1.0f - delayMix) + (gatedInput * delayMix);
-            const float output = source * (1.0f - outputMix) + wet * outputMix;
-            buffer.setSample(ch, sample, output);
+            const float wetSignal = delayed + (gatedSource * dryWet);
+            const float processed = source * (1.0f - dryWet) + wetSignal * dryWet;
+            const float finalOut = source * (1.0f - output) + processed * output;
+            buffer.setSample(ch, sample, finalOut);
 
             line.writePosition = (line.writePosition + 1) % size;
         }

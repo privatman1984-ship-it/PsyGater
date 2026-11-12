@@ -1,14 +1,14 @@
 # PsyGater
 
-PsyGater is a Windows VST3 effect designed around a Goa/Psytrance-inspired rhythmic gate and a stereo delay. It is implemented as a JUCE 8 plugin and structured as a solid starting point for a more advanced production-grade effect.
+PsyGater is a Windows VST3 effect designed around a Goa/Psytrance-inspired rhythmic gate and a stereo delay. It is implemented as a JUCE 8 plugin and built as a strong starting point for a production-ready VST effect.
 
 ## Features
 
 - Stereo VST3 effect for Windows
-- Rhythmic gate with tempo-aware pattern modulation
-- Stereo delayed feedback texture for psychedelic echoes
+- Rhythmic gate with tempo-aware rhythmic modulation
+- Stereo echo feedback texture for psytrance-style delay trails
 - Factory presets: Goa Pulse, Psy Chop, Echo Ritual and Forest Flow
-- Host-saving parameter state through JUCE's `AudioProcessorValueTreeState`
+- Persistent parameter state through JUCE's audio parameter tree
 
 ## Build instructions
 
@@ -28,7 +28,7 @@ cmake -S . -B build -A x64
 cmake --build build --config Release
 ```
 
-If you want only the VST3 target:
+Or target only VST3:
 
 ```powershell
 cmake --build build --config Release --target PsyGater_VST3
@@ -40,7 +40,7 @@ The generated VST3 bundle is typically placed under:
 build\PsyGater_artefacts\Release\VST3\
 ```
 
-You can then copy the generated `.vst3` bundle to:
+Copy the `.vst3` bundle to:
 
 ```text
 C:\Program Files\Common Files\VST3\
@@ -48,15 +48,13 @@ C:\Program Files\Common Files\VST3\
 
 ## Preset design
 
-The factory presets are intentionally tuned toward rhythmic psytrance textures:
-
-- Goa Pulse: wide gate + punchy short delay
-- Psy Chop: fast, tight rhythmic gating
-- Echo Ritual: deep delayed ambience with slower release
-- Forest Flow: slower cycling, more spacious and atmospheric response
+- Goa Pulse: more aggressive gate and punchy, shorter delay.
+- Psy Chop: tighter rhythmic gating with faster movement.
+- Echo Ritual: a wider, more spacious delay tail.
+- Forest Flow: smoother and atmospheric, ideal for drifting psychedelic textures.
 
 ## Notes
 
 - This repository uses JUCE 8 via CMake `FetchContent`.
-- The plugin is intended as a strong starting point for further refinement in sound design, GUI polish and extra modulation features.
-- The build is Windows-focused, but the code is still based on JUCE and can be adapted for other platforms with minimal changes.
+- The code is intentionally structured as a strong base for further sound design polish, automation, and GUI refinement.
+- The plugin is Windows-focused and intended to be adapted or expanded for a production workflow.
