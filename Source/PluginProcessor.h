@@ -14,7 +14,7 @@ public:
     bool acceptsMidi() const override { return false; }
     bool producesMidi() const override { return false; }
     bool isMidiEffect() const override { return false; }
-    double getTailLengthSeconds() const override { return 1.6; }
+    double getTailLengthSeconds() const override { return 1.5; }
     bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
 
     int getNumPrograms() override { return 1; }
@@ -33,6 +33,7 @@ public:
     void setStateInformation(const void* data, int sizeInBytes) override;
 
     void applyPreset(int presetIndex);
+
     static constexpr int presetCount = 8;
     static const std::array<const char*, presetCount> presetNames;
 
@@ -52,8 +53,8 @@ private:
     float gateEnvelope = 1.0f;
 
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
-    void setValue(const char* parameterID, float value);
     float getValue(const char* parameterID) const;
+    void setValue(const char* parameterID, float value);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PsyGaterAudioProcessor)
 };
