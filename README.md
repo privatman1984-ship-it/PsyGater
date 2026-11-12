@@ -1,60 +1,36 @@
-# PsyGater
+# PsyGater — Version 4
 
-PsyGater is a Windows VST3 effect designed around a Goa/Psytrance-inspired rhythmic gate and a stereo delay. It is implemented as a JUCE 8 plugin and built as a strong starting point for a production-ready VST effect.
+A JUCE 8 Windows VST3 audio effect for Goa/Psytrance-style rhythmic gating and ping-pong delay.
 
-## Features
+## Version 4 highlights
 
-- Stereo VST3 effect for Windows
-- Rhythmic gate with tempo-aware rhythmic modulation
-- Stereo echo feedback texture for psytrance-style delay trails
-- Factory presets: Goa Pulse, Psy Chop, Echo Ritual and Forest Flow
-- Persistent parameter state through JUCE's audio parameter tree
+- Eight factory starting-point presets, including Goa Pulse, Psy Chop, Echo Ritual and Forest Flow.
+- Four 16-cycle gate patterns: Straight, Goa, Offbeat and Stutter.
+- Tempo-aware quarter, eighth, sixteenth and thirty-second rate settings, plus 4/8/12 Hz free rates.
+- Adjustable gate depth, width, attack, release and swing.
+- Stereo cross-feedback delay with bounded feedback and a shared dry/wet blend.
+- Host parameter attachments and state persistence; presets recall their parameter values.
 
-## Build instructions
+## Windows build
 
-### Requirements
+Requirements: Windows 10+, Visual Studio 2022 (Desktop development with C++), CMake 3.22+ and Git.
 
-- Windows 10 or later
-- Visual Studio 2022 with Desktop development with C++
-- CMake 3.22+
-- Git
-
-### Configure and build
-
-Open a Developer PowerShell for VS 2022 and run:
+In Developer PowerShell for VS 2022:
 
 ```powershell
 cmake -S . -B build -A x64
-cmake --build build --config Release
-```
-
-Or target only VST3:
-
-```powershell
 cmake --build build --config Release --target PsyGater_VST3
 ```
 
-The generated VST3 bundle is typically placed under:
+JUCE is fetched by CMake on first configure. The resulting bundle is usually under `build\PsyGater_artefacts\Release\VST3\`. Copy `PsyGater.vst3` to `C:\Program Files\Common Files\VST3\` if automatic installation is unavailable, then rescan plugins in your DAW.
 
-```text
-build\PsyGater_artefacts\Release\VST3\
-```
+## Controls
 
-Copy the `.vst3` bundle to:
+- **Preset** loads one of eight factory settings.
+- **Gate Pattern** chooses Straight, Goa, Offbeat or Stutter.
+- **Rate** selects tempo-synced note lengths or a free-running frequency.
+- **Depth / Width / Attack / Release / Swing** shape the gate motion.
+- **Delay Time / Feedback / Dry-Wet** control the stereo echo.
+- **Output** blends the processed signal with the original input.
 
-```text
-C:\Program Files\Common Files\VST3\
-```
-
-## Preset design
-
-- Goa Pulse: more aggressive gate and punchy, shorter delay.
-- Psy Chop: tighter rhythmic gating with faster movement.
-- Echo Ritual: a wider, more spacious delay tail.
-- Forest Flow: smoother and atmospheric, ideal for drifting psychedelic textures.
-
-## Notes
-
-- This repository uses JUCE 8 via CMake `FetchContent`.
-- The code is intentionally structured as a strong base for further sound design polish, automation, and GUI refinement.
-- The plugin is Windows-focused and intended to be adapted or expanded for a production workflow.
+The plugin follows the host's reported BPM for its synced rates. Gate phase is free-running and is not reset to transport/PPQ position. The presets are factory parameter snapshots, not exported `.vstpreset` files. Please audition levels carefully when using high feedback or deep gating. JUCE is licensed separately; review its terms before redistributing binaries.
