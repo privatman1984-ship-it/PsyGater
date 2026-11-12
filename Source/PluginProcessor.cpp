@@ -24,20 +24,20 @@ struct Preset
 };
 
 constexpr std::array<Preset, PsyGaterAudioProcessor::presetCount> presets {{
-    { 0.86f, 2.0f, 0.48f, 1.2f, 24.0f, 375.0f, 0.48f, 0.30f, 0.95f, 1.0f, 0.08f },
-    { 0.96f, 3.0f, 0.34f, 0.4f, 12.0f, 250.0f, 0.34f, 0.22f, 0.96f, 3.0f, 0.02f },
-    { 0.70f, 1.0f, 0.58f, 5.0f, 80.0f, 500.0f, 0.66f, 0.46f, 0.90f, 1.0f, 0.12f },
-    { 0.76f, 2.0f, 0.64f, 9.0f, 110.0f, 625.0f, 0.56f, 0.38f, 0.94f, 2.0f, 0.18f },
-    { 0.92f, 2.0f, 0.42f, 0.6f, 16.0f, 187.5f, 0.44f, 0.32f, 0.92f, 3.0f, 0.00f },
-    { 0.78f, 3.0f, 0.55f, 3.0f, 42.0f, 750.0f, 0.72f, 0.56f, 0.88f, 1.0f, 0.10f },
-    { 0.64f, 1.0f, 0.70f, 14.0f, 150.0f, 420.0f, 0.52f, 0.34f, 0.90f, 2.0f, 0.22f },
-    { 0.98f, 4.0f, 0.28f, 0.2f, 8.0f, 125.0f, 0.28f, 0.18f, 0.98f, 3.0f, 0.00f }
+    { 0.90f, 2.0f, 0.38f, 1.0f, 28.0f, 410.0f, 0.52f, 0.34f, 0.96f, 1.0f, 0.10f },
+    { 0.96f, 3.0f, 0.30f, 0.5f, 14.0f, 255.0f, 0.36f, 0.24f, 0.95f, 3.0f, 0.04f },
+    { 0.72f, 1.0f, 0.55f, 6.0f, 92.0f, 540.0f, 0.70f, 0.48f, 0.90f, 1.0f, 0.14f },
+    { 0.80f, 2.0f, 0.60f, 10.0f, 120.0f, 675.0f, 0.58f, 0.40f, 0.93f, 2.0f, 0.18f },
+    { 0.92f, 2.0f, 0.44f, 0.6f, 17.0f, 210.0f, 0.42f, 0.28f, 0.94f, 3.0f, 0.00f },
+    { 0.78f, 3.0f, 0.52f, 3.5f, 48.0f, 790.0f, 0.74f, 0.60f, 0.88f, 1.0f, 0.12f },
+    { 0.66f, 1.0f, 0.68f, 15.0f, 170.0f, 440.0f, 0.54f, 0.36f, 0.91f, 2.0f, 0.20f },
+    { 0.98f, 4.0f, 0.26f, 0.2f, 9.0f, 140.0f, 0.30f, 0.18f, 0.98f, 3.0f, 0.00f }
 }};
 }
 
 const std::array<const char*, PsyGaterAudioProcessor::presetCount> PsyGaterAudioProcessor::presetNames {{
-    "Goa Pulse", "Psy Chop", "Echo Ritual", "Forest Flow",
-    "Night Drive", "Crystal Echo", "Moss Temple", "Razor Stutter"
+    "Night Ritual", "Sub Paradox", "Temple Echo", "Forest Vow",
+    "Afterglow Pulse", "Glass Invocation", "Deep Ember", "Shadow Stutter"
 }};
 
 PsyGaterAudioProcessor::PsyGaterAudioProcessor()
@@ -56,30 +56,30 @@ juce::AudioProcessorValueTreeState::ParameterLayout PsyGaterAudioProcessor::crea
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
 
     layout.add(std::make_unique<Float>(juce::ParameterID { "depth", 1 }, "Depth",
-        juce::NormalisableRange<float>(0.0f, 1.0f), 0.86f));
+        juce::NormalisableRange<float>(0.0f, 1.0f), 0.90f));
     layout.add(std::make_unique<Float>(juce::ParameterID { "rate", 1 }, "Rate",
         juce::NormalisableRange<float>(0.0f, 6.0f, 1.0f), 2.0f));
     layout.add(std::make_unique<Float>(juce::ParameterID { "width", 1 }, "Width",
-        juce::NormalisableRange<float>(0.05f, 0.95f), 0.48f));
+        juce::NormalisableRange<float>(0.05f, 0.95f), 0.38f));
     layout.add(std::make_unique<Float>(juce::ParameterID { "attack", 1 }, "Attack",
-        juce::NormalisableRange<float>(0.1f, 100.0f, 0.0f, 0.35f), 1.2f));
+        juce::NormalisableRange<float>(0.1f, 100.0f, 0.0f, 0.35f), 1.0f));
     layout.add(std::make_unique<Float>(juce::ParameterID { "release", 1 }, "Release",
-        juce::NormalisableRange<float>(1.0f, 500.0f, 0.0f, 0.35f), 24.0f));
+        juce::NormalisableRange<float>(1.0f, 500.0f, 0.0f, 0.35f), 28.0f));
     layout.add(std::make_unique<Float>(juce::ParameterID { "delayTime", 1 }, "Delay Time",
-        juce::NormalisableRange<float>(20.0f, 1500.0f, 0.0f, 0.5f), 375.0f));
+        juce::NormalisableRange<float>(20.0f, 1500.0f, 0.0f, 0.5f), 410.0f));
     layout.add(std::make_unique<Float>(juce::ParameterID { "feedback", 1 }, "Feedback",
-        juce::NormalisableRange<float>(0.0f, maxFeedback), 0.48f));
+        juce::NormalisableRange<float>(0.0f, maxFeedback), 0.52f));
     layout.add(std::make_unique<Float>(juce::ParameterID { "dryWet", 1 }, "Dry/Wet",
-        juce::NormalisableRange<float>(0.0f, 1.0f), 0.30f));
+        juce::NormalisableRange<float>(0.0f, 1.0f), 0.34f));
     layout.add(std::make_unique<Float>(juce::ParameterID { "output", 1 }, "Output",
-        juce::NormalisableRange<float>(0.0f, 1.0f), 0.95f));
+        juce::NormalisableRange<float>(0.0f, 1.0f), 0.96f));
     layout.add(std::make_unique<Choice>(juce::ParameterID { "pattern", 1 }, "Pattern",
         juce::StringArray { "Straight", "Goa", "Offbeat", "Stutter" }, 1));
     layout.add(std::make_unique<Float>(juce::ParameterID { "swing", 1 }, "Swing",
-        juce::NormalisableRange<float>(0.0f, 0.45f), 0.08f));
+        juce::NormalisableRange<float>(0.0f, 0.45f), 0.10f));
     layout.add(std::make_unique<Choice>(juce::ParameterID { "preset", 1 }, "Preset",
-        juce::StringArray { "Goa Pulse", "Psy Chop", "Echo Ritual", "Forest Flow",
-                           "Night Drive", "Crystal Echo", "Moss Temple", "Razor Stutter" }, 0));
+        juce::StringArray { "Night Ritual", "Sub Paradox", "Temple Echo", "Forest Vow",
+                           "Afterglow Pulse", "Glass Invocation", "Deep Ember", "Shadow Stutter" }, 0));
 
     return layout;
 }

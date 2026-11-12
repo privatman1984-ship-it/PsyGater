@@ -64,8 +64,8 @@ void PsyGaterAudioProcessorEditor::configureSlider(size_t index, const juce::Str
 
     slider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
     slider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 82, 20);
-    slider.setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(0xffff7a30));
-    slider.setColour(juce::Slider::thumbColourId, juce::Colour(0xffffc16a));
+    slider.setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(0xff8d44f5));
+    slider.setColour(juce::Slider::thumbColourId, juce::Colour(0xffff89de));
 
     if (parameterID == "rate")
     {
@@ -91,7 +91,7 @@ void PsyGaterAudioProcessorEditor::configureSlider(size_t index, const juce::Str
 
     label.setText(labelText, juce::dontSendNotification);
     label.setJustificationType(juce::Justification::centred);
-    label.setColour(juce::Label::textColourId, juce::Colour(0xffd5dce5));
+    label.setColour(juce::Label::textColourId, juce::Colour(0xffdfe6ff));
     label.setFont(juce::Font(11.0f, juce::Font::bold));
     addAndMakeVisible(label);
     addAndMakeVisible(slider);
@@ -101,19 +101,19 @@ void PsyGaterAudioProcessorEditor::configureSlider(size_t index, const juce::Str
 
 void PsyGaterAudioProcessorEditor::paint(juce::Graphics& g)
 {
-    g.fillAll(juce::Colour(0xff10151d));
-    g.setColour(juce::Colour(0xffff7a30));
+    g.fillAll(juce::Colour(0xff0f0c16));
+    g.setColour(juce::Colour(0xff8d44f5));
     g.setFont(juce::Font(30.0f, juce::Font::bold));
     g.drawText("PSYGATER", 24, 15, 310, 38, juce::Justification::centredLeft);
 
-    g.setColour(juce::Colour(0xff8795a5));
+    g.setColour(juce::Colour(0xffc8d3ff));
     g.setFont(juce::Font(12.0f));
-    g.drawText("RHYTHMIC GATE  /  PING-PONG ECHO", 26, 54, 450, 20, juce::Justification::centredLeft);
+    g.drawText("DARK RITUAL GATE  /  SHADOW DELAY", 26, 54, 450, 20, juce::Justification::centredLeft);
 
-    g.setColour(juce::Colour(0xff293440));
+    g.setColour(juce::Colour(0xff2d213b));
     g.drawHorizontalLine(83, 24.0f, static_cast<float>(getWidth() - 24));
 
-    g.setColour(juce::Colour(0xff19232d));
+    g.setColour(juce::Colour(0xff17131d));
     g.fillRoundedRectangle(16.0f, 78.0f, static_cast<float>(getWidth() - 32), 48.0f, 8.0f);
 }
 

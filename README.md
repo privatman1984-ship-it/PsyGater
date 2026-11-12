@@ -1,15 +1,14 @@
-# PsyGater — Final Product Version
+# PsyGater — Dark Ritual Edition
 
-A JUCE 8 Windows VST3 effect built for Goa/Psytrance-inspired rhythmic gating and stereo delay.
+A JUCE 8 Windows VST3 effect for darker Goa/Psytrance settings with a more ritualistic, shadowy stereo delay character.
 
 ## Product profile
 
 - Stereo VST3 effect for Windows
-- Tempo-aware gate engine with multiple rhythmic patterns
-- Stereo delay with feedback and ping-pong-style response
-- Eight factory presets tuned for psytrance and Goa aesthetics
-- Host parameter persistence and clean plugin-state handling
-- Production-ready code structure for later refinement or commercial packaging
+- Tempo-aware gate engine tuned for darker ritual sweeps and strobing movement
+- Stereo delay with dense feedback and hypnotic cross-echo behavior
+- Eight factory presets designed for deep Goa, ritual trance, and night-drive textures
+- Persistent host state and clean plugin architecture for future refinement
 
 ## Build requirements
 
@@ -27,28 +26,25 @@ cmake -S . -B build -A x64
 cmake --build build --config Release --target PsyGater
 ```
 
-The generated plugin bundle will typically appear under:
+The generated plugin bundle usually appears under:
 
 ```text
 build\PsyGater_artefacts\Release\VST3\
 ```
 
-To install it manually:
+Copy it to:
 
 ```text
 C:\Program Files\Common Files\VST3\
 ```
 
-After copying, rescan your DAW plugin list.
-
 ## Controls
 
-- Preset: eight starting-point sound designs
+- Preset: Night Ritual, Sub Paradox, Temple Echo, Forest Vow, Afterglow Pulse, Glass Invocation, Deep Ember, Shadow Stutter
 - Gate Pattern: Straight, Goa, Offbeat, Stutter
-- Rate: tempo-synced note values or free-running Hz values
-- Depth / Width / Attack / Release / Swing: shaping the gate motion
-- Delay Time / Feedback / Dry-Wet / Output: shaping the stereo echo path
+- Depth / Width / Attack / Release / Swing: shaping the rhythmic gate motion
+- Delay Time / Feedback / Dry-Wet / Output: shaping the shadowy echo structure
 
-## Product notes
+## Design direction
 
-This version is a final, production-oriented working foundation for a Windows VST3 plugin. It is built around JUCE 8 and is suitable as a stable base for further sound design tuning, GUI polish, and DAW validation.
+This edition leans toward a darker, more ceremonial psycho-techno sound with a deeper visual identity and a more dramatic, ritualized tone palette.
