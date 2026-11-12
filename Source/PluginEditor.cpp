@@ -17,7 +17,7 @@ PsyGaterAudioProcessorEditor::PsyGaterAudioProcessorEditor(PsyGaterAudioProcesso
     setResizeLimits(680, 420, 1080, 680);
 
     presetLabel.setText("PRESET", juce::dontSendNotification);
-    presetLabel.setColour(juce::Label::textColourId, juce::Colour(0xffaab5c2));
+    presetLabel.setColour(juce::Label::textColourId, juce::Colour(0xffd8d9d3));
     presetLabel.setFont(juce::Font(12.0f, juce::Font::bold));
     addAndMakeVisible(presetLabel);
 
@@ -33,7 +33,7 @@ PsyGaterAudioProcessorEditor::PsyGaterAudioProcessorEditor(PsyGaterAudioProcesso
     addAndMakeVisible(presetBox);
 
     patternLabel.setText("GATE PATTERN", juce::dontSendNotification);
-    patternLabel.setColour(juce::Label::textColourId, juce::Colour(0xffaab5c2));
+    patternLabel.setColour(juce::Label::textColourId, juce::Colour(0xffd8d9d3));
     patternLabel.setFont(juce::Font(12.0f, juce::Font::bold));
     addAndMakeVisible(patternLabel);
     patternBox.addItemList({ "Straight", "Goa", "Offbeat", "Stutter" }, 1);
@@ -64,8 +64,8 @@ void PsyGaterAudioProcessorEditor::configureSlider(size_t index, const juce::Str
 
     slider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
     slider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 82, 20);
-    slider.setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(0xff8d44f5));
-    slider.setColour(juce::Slider::thumbColourId, juce::Colour(0xffff89de));
+    slider.setColour(juce::Slider::rotarySliderFillColourId, juce::Colour(0xfff7a23d));
+    slider.setColour(juce::Slider::thumbColourId, juce::Colour(0xfffefbe3));
 
     if (parameterID == "rate")
     {
@@ -91,7 +91,7 @@ void PsyGaterAudioProcessorEditor::configureSlider(size_t index, const juce::Str
 
     label.setText(labelText, juce::dontSendNotification);
     label.setJustificationType(juce::Justification::centred);
-    label.setColour(juce::Label::textColourId, juce::Colour(0xffdfe6ff));
+    label.setColour(juce::Label::textColourId, juce::Colour(0xfff5f0d6));
     label.setFont(juce::Font(11.0f, juce::Font::bold));
     addAndMakeVisible(label);
     addAndMakeVisible(slider);
@@ -101,19 +101,19 @@ void PsyGaterAudioProcessorEditor::configureSlider(size_t index, const juce::Str
 
 void PsyGaterAudioProcessorEditor::paint(juce::Graphics& g)
 {
-    g.fillAll(juce::Colour(0xff0f0c16));
-    g.setColour(juce::Colour(0xff8d44f5));
+    g.fillAll(juce::Colour(0xff15120f));
+    g.setColour(juce::Colour(0xfff7a23d));
     g.setFont(juce::Font(30.0f, juce::Font::bold));
     g.drawText("PSYGATER", 24, 15, 310, 38, juce::Justification::centredLeft);
 
-    g.setColour(juce::Colour(0xffc8d3ff));
+    g.setColour(juce::Colour(0xfff1d5a7));
     g.setFont(juce::Font(12.0f));
-    g.drawText("DARK RITUAL GATE  /  SHADOW DELAY", 26, 54, 450, 20, juce::Justification::centredLeft);
+    g.drawText("GOA CLASSIC  /  SUNRISE DELAY", 26, 54, 450, 20, juce::Justification::centredLeft);
 
-    g.setColour(juce::Colour(0xff2d213b));
+    g.setColour(juce::Colour(0xff52351d));
     g.drawHorizontalLine(83, 24.0f, static_cast<float>(getWidth() - 24));
 
-    g.setColour(juce::Colour(0xff17131d));
+    g.setColour(juce::Colour(0xff1b1714));
     g.fillRoundedRectangle(16.0f, 78.0f, static_cast<float>(getWidth() - 32), 48.0f, 8.0f);
 }
 

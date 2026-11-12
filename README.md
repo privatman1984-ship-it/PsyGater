@@ -1,14 +1,14 @@
-# PsyGater — Dark Ritual Edition
+# PsyGater — Goa Classic Edition
 
-A JUCE 8 Windows VST3 effect for darker Goa/Psytrance settings with a more ritualistic, shadowy stereo delay character.
+A JUCE 8 Windows VST3 effect for classic Goa trance energy with warm analog movement, roomy delayed echoes, and bright sunrise textures.
 
 ## Product profile
 
 - Stereo VST3 effect for Windows
-- Tempo-aware gate engine tuned for darker ritual sweeps and strobing movement
-- Stereo delay with dense feedback and hypnotic cross-echo behavior
-- Eight factory presets designed for deep Goa, ritual trance, and night-drive textures
-- Persistent host state and clean plugin architecture for future refinement
+- Tempo-aware gate engine tuned for classic Goa trance grooves and hypnotic motion
+- Warm stereo delay with smooth feedback and flowing cross-echo texture
+- Eight factory presets built for sunrise, temple, and trance-festival energy
+- Persistent host state and a clean architecture ready for refinement and expansion
 
 ## Build requirements
 
@@ -40,11 +40,11 @@ C:\Program Files\Common Files\VST3\
 
 ## Controls
 
-- Preset: Night Ritual, Sub Paradox, Temple Echo, Forest Vow, Afterglow Pulse, Glass Invocation, Deep Ember, Shadow Stutter
+- Preset: Sunrise Drift, Temple Lift, Golden Echo, Azure Vibe, Phantom Orbit, Maya Glide, Solar Pulse, Goa Bloom
 - Gate Pattern: Straight, Goa, Offbeat, Stutter
 - Depth / Width / Attack / Release / Swing: shaping the rhythmic gate motion
-- Delay Time / Feedback / Dry-Wet / Output: shaping the shadowy echo structure
+- Delay Time / Feedback / Dry-Wet / Output: shaping the classic Goa delay and spaciousness
 
 ## Design direction
 
-This edition leans toward a darker, more ceremonial psycho-techno sound with a deeper visual identity and a more dramatic, ritualized tone palette.
+This edition follows a brighter, more classic Goa trance identity: warm, melodic, atmospheric, and uplifting, with a more festival-friendly visual language and a gentler sunrise palette.
